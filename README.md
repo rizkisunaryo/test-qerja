@@ -31,3 +31,11 @@ For detailed info about generating release APK: https://facebook.github.io/react
 
 #### Run
 Run this command in project root folder: `react-native run-android --variant=release`
+
+### iOS
+- Go to `ios` folder, and open `Starter.xcodeproj`. It will open XCode
+- Go to `Product -> Scheme -> Edit Scheme`.
+- Change `Build Configuration` to `Release`
+- Run the app
+
+NOTE: To run in debug mode, change back `Build Configuration` to `Debug`
