@@ -72,7 +72,6 @@ export const reducer = (state = initialNavState, action) => {
         const routeName = ROUTE_NAMES[action.type]
         nextState = AppNavigator.router.getStateForAction(
           StackActions.push({ routeName: routeName, params: action.params }),
-          // NavigationActions.navigate({ routeName: routeName, params: action.params }),
           state
         )
       }
