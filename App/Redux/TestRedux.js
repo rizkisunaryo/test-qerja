@@ -20,7 +20,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-const testReducer = (state, action) => {
+export const testReducer = (state, action) => {
   return state.merge({ testData1: action.data1, testData2: action.data2 })
 }
 
