@@ -1,4 +1,4 @@
-import { INITIAL_STATE, testReducer } from './TestRedux'
+import { INITIAL_STATE, testReducer, storeTestList } from './TestRedux'
 
 describe('TestRedux', () => {
   it('should test testReducer', () => {
@@ -11,6 +11,17 @@ describe('TestRedux', () => {
       ...INITIAL_STATE,
       testData1: 'test 1',
       testData2: 'test 2'
+    })
+  })
+
+  it('should test storeTestList', () => {
+    const action = {
+      resp: { data: 'dummy' }
+    }
+    const newState = storeTestList(INITIAL_STATE, action)
+    expect(newState).toEqual({
+      ...INITIAL_STATE,
+      testList: { data: 'dummy' }
     })
   })
 })

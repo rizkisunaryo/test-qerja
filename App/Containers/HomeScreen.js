@@ -29,6 +29,9 @@ export class HomeScreen extends React.PureComponent {
           onPress={() => this.props.onDoTest(this.textInputValue)} />
         <Text>{this.props.testData1} : {this.props.testData2}</Text>
         <Button title='Go Stack 2' onPress={() => this.props.onGoStack2()} />
+        <Button title='Test Api'
+          onPress={() => this.props.onDoApi()} />
+        <Text>{JSON.stringify(this.props.testList)}</Text>
       </View>
     )
   }
@@ -37,12 +40,14 @@ export class HomeScreen extends React.PureComponent {
 export const mapStateToProps = (state) => {
   return {
     testData1: state.test.testData1,
-    testData2: state.test.testData2
+    testData2: state.test.testData2,
+    testList: state.test.testList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onDoApi: () => dispatch(TestCreators.doApi()),
     onDoTest: data => {
       dispatch(TestCreators.doTest(data))
     },

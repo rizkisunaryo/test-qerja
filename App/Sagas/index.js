@@ -6,7 +6,7 @@ import { TestTypes } from '../Redux/TestRedux'
 
 /* ------------- Sagas ------------- */
 
-import { doTest } from './TestSagas'
+import { doTest, doApi } from './TestSagas'
 
 /* ------------- API ------------- */
 
@@ -16,6 +16,7 @@ import { doTest } from './TestSagas'
 
 export default function * root () {
   yield all([
-    takeLatest(TestTypes.DO_TEST, doTest)
+    takeLatest(TestTypes.DO_TEST, doTest),
+    takeLatest(TestTypes.DO_API, doApi)
   ])
 }

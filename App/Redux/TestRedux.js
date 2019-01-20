@@ -5,7 +5,9 @@ import { createReducer, createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
   doTest: ['data'],
-  testReducer: ['data1', 'data2']
+  testReducer: ['data1', 'data2'],
+  doApi: null,
+  storeTestList: ['resp']
 }, {})
 
 export const TestTypes = Types
@@ -15,7 +17,8 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   testData1: null,
-  testData2: null
+  testData2: null,
+  testList: null
 })
 
 /* ------------- Reducers ------------- */
@@ -24,10 +27,15 @@ export const testReducer = (state, action) => {
   return state.merge({ testData1: action.data1, testData2: action.data2 })
 }
 
+export const storeTestList = (state, action) => {
+  return state.merge({ testList: action.resp })
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 const HANDLERS = {
-  [Types.TEST_REDUCER]: testReducer
+  [Types.TEST_REDUCER]: testReducer,
+  [Types.STORE_TEST_LIST]: storeTestList
 }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)
