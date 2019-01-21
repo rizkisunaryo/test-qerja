@@ -1,3 +1,8 @@
+# Installation
+```
+$ npm install
+```
+
 # Run
 
 ## Debug Mode
