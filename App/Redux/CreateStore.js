@@ -33,7 +33,8 @@ export default (rootReducer, rootSaga) => {
 
   const persistConfig = {
     key: 'root',
-    storage: AsyncStorage
+    storage: AsyncStorage,
+    blacklist: ['window', 'nav']
   }
   const persistedReducer = persistReducer(persistConfig, rootReducer)
   const store = createAppropriateStore(persistedReducer, compose(...enhancers))

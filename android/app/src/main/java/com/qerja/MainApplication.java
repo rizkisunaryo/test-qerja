@@ -1,4 +1,4 @@
-package com.starter;
+package com.qerja;
 
 import android.app.Application;
 

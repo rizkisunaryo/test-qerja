@@ -20,7 +20,7 @@ export const INITIAL_STATE = {
 export const setWindowLoading = (state, action) => {
   return {
     ...state,
-    windowLoading: action.windowLoading
+    windowLoading: action.loading
   }
 }
 
