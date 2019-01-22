@@ -10,7 +10,7 @@ import { NavTypes } from './NavReduxCreators'
 
 /* ------------- Initial State ------------- */
 
-const defaultAction = AppNavigator.router.getActionForPathAndParams('LoadingScreen')
+const defaultAction = AppNavigator.router.getActionForPathAndParams('HomeScreen')
 const initialNavState = AppNavigator.router.getStateForAction(defaultAction)
 
 /* ------------- Map Types to Route Name ------------- */
@@ -20,6 +20,7 @@ const initialNavState = AppNavigator.router.getStateForAction(defaultAction)
 const ROUTE_NAMES = {}
 ROUTE_NAMES[NavTypes.GO_STACK2] = 'Stack2Screen'
 ROUTE_NAMES[NavTypes.GO_STACK3] = 'Stack3Screen'
+ROUTE_NAMES[NavTypes.GO_NEWS_DETAIL] = 'NewsDetailScreen'
 
 /* ------------- Reducers and Hookup Reducers to Types ------------- */
 

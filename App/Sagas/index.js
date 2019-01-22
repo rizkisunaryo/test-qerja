@@ -2,11 +2,11 @@ import { all, takeLatest } from 'redux-saga/effects'
 
 /* ------------- Types ------------- */
 
-import { TestTypes } from '../Redux/TestRedux'
+import { NewsTypes } from '../Redux/NewsRedux'
 
 /* ------------- Sagas ------------- */
 
-import { doTest, doApi } from './TestSagas'
+import { fetchNews, fetchMoreNews, refreshNews } from './NewsSagas'
 
 /* ------------- API ------------- */
 
@@ -16,7 +16,8 @@ import { doTest, doApi } from './TestSagas'
 
 export default function * root () {
   yield all([
-    takeLatest(TestTypes.DO_TEST, doTest),
-    takeLatest(TestTypes.DO_API, doApi)
+    takeLatest(NewsTypes.FETCH_NEWS, fetchNews),
+    takeLatest(NewsTypes.FETCH_MORE_NEWS, fetchMoreNews),
+    takeLatest(NewsTypes.REFRESH_NEWS, refreshNews)
   ])
 }
