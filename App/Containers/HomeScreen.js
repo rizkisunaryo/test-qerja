@@ -1,14 +1,19 @@
 import React from 'react'
 import {
   Button,
+  Dimensions,
+  FlatList,
   Text,
   TextInput,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
-import TestCreators from '../Redux/TestRedux'
+import NewsCreators from '../Redux/NewsRedux'
 import NavCreators from '../Redux/NavReduxCreators'
+import HomeImage from '../Components/HomeImage'
 
 export const HomeScreenNavigationOptions = {
   title: 'Home',
@@ -17,21 +22,64 @@ export const HomeScreenNavigationOptions = {
 }
 
 export class HomeScreen extends React.PureComponent {
-  static navigationOptions = HomeScreenNavigationOptions
+  windowWidth = Dimensions.get('window').width
+
+  componentDidMount () {
+    if (!this.props.newsList) {
+      this.props.onFetchNews()
+    }
+  }
 
   render () {
     return (
-      <View>
-        <Text /><Text /><Text />
-        <Button title='Drawer' onPress={() => this.props.navigation.openDrawer()} />
-        <TextInput onChangeText={txt => { this.textInputValue = txt }} />
-        <Button title='Test Saga'
-          onPress={() => this.props.onDoTest(this.textInputValue)} />
-        <Text>{this.props.testData1} : {this.props.testData2}</Text>
-        <Button title='Go Stack 2' onPress={() => this.props.onGoStack2()} />
-        <Button title='Test Api'
-          onPress={() => this.props.onDoApi()} />
-        <Text>{JSON.stringify(this.props.testList)}</Text>
+      <View style={{ flex: 1 }}>
+        <View style={{
+          flexDirection: 'row',
+          width: this.windowWidth,
+          alignItems: 'center',
+          paddingBottom: 5,
+          borderBottomColor: 'black',
+          borderBottomWidth: 0.5
+        }}>
+          <Text>Keyword: </Text>
+          <TextInput
+            style={{
+              flex: 1,
+              borderColor: 'black',
+              borderWidth: 0.5,
+              padding: 5,
+              marginRight: 5
+            }}
+            onChangeText={txt => { this.keywordValue = txt }}
+            onSubmitEditing={() => this.props.onFetchNews(this.keywordValue)} />
+          <Button title='Search' onPress={() => this.props.onFetchNews(this.keywordValue)} />
+        </View>
+        <FlatList
+          data={this.props.newsList}
+          renderItem={({ item, index }) => {
+            let image = null
+            if (item.urlToImage &&
+              typeof item.urlToImage === 'string' &&
+              item.urlToImage.trim() !== '') {
+              image = <HomeImage uri={_.get(item, 'urlToImage', '')} width={this.windowWidth} />
+            }
+            return (
+              <TouchableOpacity key={index}
+                style={{
+                  padding: 5,
+                  borderBottomColor: 'black',
+                  borderBottomWidth: 0.5
+                }}
+                onPress={() => this.props.onGoNewsDetail({ url: item.url })}>
+                {image}
+                <Text>{_.get(item, 'title', 'Untitled')}</Text>
+              </TouchableOpacity>
+            )
+          }}
+          onEndReached={() => this.props.onFetchMoreNews()}
+          onRefresh={() => this.props.onRefreshNews()}
+          refreshing={this.props.refreshing}
+        />
       </View>
     )
   }
@@ -39,21 +87,17 @@ export class HomeScreen extends React.PureComponent {
 
 export const mapStateToProps = (state) => {
   return {
-    testData1: state.test.testData1,
-    testData2: state.test.testData2,
-    testList: state.test.testList
+    newsList: state.news.newsList,
+    refreshing: state.news.refreshing
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDoApi: () => dispatch(TestCreators.doApi()),
-    onDoTest: data => {
-      dispatch(TestCreators.doTest(data))
-    },
-    onGoStack2: () => {
-      dispatch(NavCreators.goStack2())
-    }
+    onFetchNews: keyword => dispatch(NewsCreators.fetchNews(keyword)),
+    onFetchMoreNews: () => dispatch(NewsCreators.fetchMoreNews()),
+    onRefreshNews: () => dispatch(NewsCreators.refreshNews()),
+    onGoNewsDetail: params => dispatch(NavCreators.goNewsDetail(params))
   }
 }
 

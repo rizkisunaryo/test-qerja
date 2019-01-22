@@ -1,7 +1,15 @@
 # Installation
+
+## npm install
+Run: `npm install`
+
+## Add .env file
+- Add .env file to root folder
+- Add your newsapi API key to .env file:
 ```
-$ npm install
+NEWSAPI_KEY=your-api-key-from-newsapi
 ```
+You can get your API key from here: https://newsapi.org/
 
 # Run
 
@@ -14,6 +22,7 @@ $ npm install
 ### Android
 
 #### Setup
+
 - Generate a signing key using this command:
 
 ```sudo keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000```

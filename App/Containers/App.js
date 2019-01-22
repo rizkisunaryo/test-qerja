@@ -6,19 +6,23 @@
  * @flow
  */
 
-import DebugConfig from '../Config/DebugConfig'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
+import DebugConfig from '../Config/DebugConfig'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 
-const store = createStore()
+const { store, persistor } = createStore()
 
 class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <PersistGate loading={null} persistor={persistor}>
+          <RootContainer />
+        </PersistGate>
       </Provider>
     )
   }

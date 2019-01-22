@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import Config from '../Config/DebugConfig'
 import createSagaMiddleware from 'redux-saga'
+import { persistStore, persistReducer } from 'redux-persist'
+import { AsyncStorage } from 'react-native'
 
 import { navigationMiddleware } from '../Navigation/AppNavigation'
 
@@ -28,10 +30,16 @@ export default (rootReducer, rootSaga) => {
 
   // if Reactotron is enabled (default for __DEV__), we'll create the store through Reactotron
   const createAppropriateStore = Config.useReactotron ? console.tron.createStore : createStore
-  const store = createAppropriateStore(rootReducer, compose(...enhancers))
+
+  const persistConfig = {
+    key: 'root',
+    storage: AsyncStorage
+  }
+  const persistedReducer = persistReducer(persistConfig, rootReducer)
+  const store = createAppropriateStore(persistedReducer, compose(...enhancers))
 
   // kick off root saga
   sagaMiddleware.run(rootSaga)
 
-  return store
+  return { store, persistor: persistStore(store) }
 }

@@ -8,7 +8,7 @@ if (Config.useReactotron) {
   // https://github.com/infinitered/reactotron for more options!
   Reactotron
     .configure({
-      name: 'Hyphen App',
+      name: 'Qerja',
       host: 'localhost'
     })
     .useReactNative()

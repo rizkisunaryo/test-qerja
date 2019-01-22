@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import {
+  StatusBar,
   BackHandler,
-  View
+  View,
+  Modal,
+  ActivityIndicator,
+  Platform
 } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -20,9 +24,28 @@ class RootContainer extends Component {
   render () {
     return (
       <View style={{ flex: 1 }}>
+        <StatusBar translucent />
+        <View style={{ height: Platform.OS === 'ios' ? 40 : 30 }} />
         <AppNavigation />
+        <Modal visible={this.props.isLoading} transparent>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+            <ActivityIndicator size='large' color='white' />
+          </View>
+        </Modal>
       </View>
     )
+  }
+}
+
+export const mapStateToProps = (state) => {
+  return {
+    isLoading: state.window.windowLoading
   }
 }
 
@@ -33,4 +56,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(() => ({}), mapDispatchToProps)(RootContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

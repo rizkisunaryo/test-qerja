@@ -6,7 +6,8 @@ const { Types, Creators } = createActions({
   goBack: null,
   goStack2: ['params'],
   goStack3: ['params'],
-  goTabNav: ['params']
+  goTabNav: ['params'],
+  goNewsDetail: ['params']
 })
 
 export const NavTypes = Types
