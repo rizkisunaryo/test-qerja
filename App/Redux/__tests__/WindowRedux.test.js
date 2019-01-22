@@ -5,7 +5,7 @@ import {
 
 describe('WindowRedux', () => {
   it('should set windowLoading to false', () => {
-    const action = { windowLoading: false }
+    const action = { loading: false }
     const expectedState = setWindowLoading(INITIAL_STATE, action)
     expect(expectedState).toEqual({
       ...INITIAL_STATE,
@@ -14,7 +14,7 @@ describe('WindowRedux', () => {
   })
 
   it('should set windowLoading to true', () => {
-    const action = { windowLoading: true }
+    const action = { loading: true }
     const expectedState = setWindowLoading(INITIAL_STATE, action)
     expect(expectedState).toEqual({
       ...INITIAL_STATE,
